@@ -12,14 +12,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
- * Implementation to easily manage caching models and their relationships. 
- * Cannot listen for pivot table changes.
+ * Implementation to manage caching models and their relationships. 
+ * Does not support caching relationships that are a 3 or more way pivot table.
  * @lewis-neiland
  */
 trait CacheableModel{
     
     /**
-     * Listens for model changes on boot and wipes cache if so.
+     * Listens for model changes and flushes cache if so.
     */
     protected static function bootCacheable(){
         if (!(is_subclass_of(static::class, Model::class))) {
@@ -29,11 +29,11 @@ trait CacheableModel{
         foreach (['created', 'saved', 'deleting', 'updated'] as $event) {
             static::$event(function ($instance) use ($event) {
                 if ($event === 'created' || $event === 'saved' || $event === 'updated') {
-                    $instance->wipeRelatedCaches($instance->getCacheableRelationships());
+                    $instance->flushRelatedCaches($instance->getCacheableRelationships());
                 }
                 if ($event === 'deleting') {
-                    $instance->wipeRelatedCaches($instance->getCacheableRelationships());
-                    $instance->wipeCache();
+                    $instance->flushRelatedCaches($instance->getCacheableRelationships());
+                    $instance->flushCache();
                 }
             });
         }
@@ -153,67 +153,67 @@ trait CacheableModel{
     }
 
     /**
-     * Delete the cached instance.
+     * Flush the cached instance.
      * @param string|array $relations Name of relation(s) to delete.
     */
-    public function wipeCache(){
+    public function flushCache(){
         Cache::forget($this->cacheKey());
         return true;
     }
 
     /**
-     * Forget the cached relation of a model instance.
+     * Flush the cached relation of a model instance.
      * @param string $relation The relation to forget.
      */
-    public function wipeCachedRelation(string $relation){
+    public function flushCachedRelation(string $relation){
         return Cache::forget($this->cacheKey($relation));
     }
 
     /**
-     * Forget multiple cached relations of a model instance.
-     * @param array $relations The relations to forget.
+     * Flush multiple cached relations of a model instance.
+     * @param array $relations The relations to flush.
      */
-    public function wipeCachedRelations(array $relations = null){
+    public function flushCachedRelations(array $relations = null){
         if (is_null($relations)){
             $relations = $this->getCacheableRelationships();
         }
 
         foreach($relations as $relation){
-            $this->wipeCachedRelation($relation);
+            $this->flushCachedRelation($relation);
         }
 
         return true;
     }
     
     /**
-     * Forget the cached relation of this model in related models.
-     * @param string $relation The relation to forget.
+     * Flush the cached relation of this model in related models.
+     * @param string $relation The relation to flush.
      */
-    public function wipeRelatedCache(string $relation){
+    public function flushRelatedCache(string $relation){
         $cachedModels = $this->getCachedRelation($relation);
 
         if (!($cachedModels->isEmpty())){
             foreach ($cachedModels as $cachedModel) {
-                $cachedModel->wipeCachedRelation($this->getTableName());
-                $cachedModel->wipeCachedRelation(lcfirst(class_basename($this)));
+                $cachedModel->flushCachedRelation($this->getTableName());
+                $cachedModel->flushCachedRelation(lcfirst(class_basename($this)));
             }
         }
 
-        $this->wipeCachedRelation($relation);
+        $this->flushCachedRelation($relation);
     }
 
     /**
-     * Forget the cached relations of this model in a related model.
-     * @param array|string $relation The relations to forget.
+     * Flush the cached relations of this model in a related model.
+     * @param array|string $relation The relations to flush.
      */
-    public function wipeRelatedCaches(array|string $relations = null){
+    public function flushRelatedCaches(array|string $relations = null){
         foreach ($relations as $relation){
-            $this->wipeRelatedCache($relation);
+            $this->flushRelatedCache($relation);
         }
     }
 
     /**
-     * Returns the names of model relationship methods that are cacheable.
+     * Returns the names of methods that define a relationship to this model and another, and the model has the cacheableModel trait.
      */
     public function getCacheableRelationships()
     {
