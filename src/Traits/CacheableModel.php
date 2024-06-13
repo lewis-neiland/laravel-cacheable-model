@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Traits;
 
 use DateTime;
 use Exception;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
  * Cannot listen for pivot table changes.
  * @lewis-neiland
  */
-trait Cacheable{
+trait CacheableModel{
     
     /**
      * Listens for model changes on boot and wipes cache if so.
@@ -234,7 +234,7 @@ trait Cacheable{
                 if ($return instanceof Relation) {
                     $relatedModelClass = get_class($return->getRelated());
                     
-                    if (in_array(Cacheable::class, class_uses($relatedModelClass))) {
+                    if (in_array(CacheableModel::class, class_uses($relatedModelClass))) {
                         array_push($relationships, $method->getName());
                     }
                 }
