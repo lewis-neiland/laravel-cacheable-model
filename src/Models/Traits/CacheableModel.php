@@ -1,5 +1,7 @@
 <?php
 
+namespace LewisNeiland\Models\Traits;
+
 use DateTime;
 use Exception;
 use ErrorException;
@@ -8,8 +10,6 @@ use ReflectionMethod;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-
-namespace LewisNeiland\Models\Traits;
 
 /**
  * Implementation to easily manage caching models and their relationships. 
