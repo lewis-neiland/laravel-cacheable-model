@@ -1,0 +1,25 @@
+{
+    "name": "lewis-neiland/laravel-cacheable-model",
+    "description": "A package to manage caching Eloquent models and their relationships.",
+    "type": "library",
+    "require": {
+        "php": ">=7.4",
+        "illuminate/support": "^8.0|^9.0|^10.0",
+        "illuminate/database": "^8.0|^9.0|^10.0",
+        "illuminate/cache": "^8.0|^9.0|^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LewisNeiland\\CacheableModel\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lewis Neiland",
+            "email": "lewisneiland@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
