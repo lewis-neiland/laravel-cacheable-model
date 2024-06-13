@@ -29,10 +29,10 @@ trait CacheableModel{
         foreach (['created', 'saved', 'deleting', 'updated'] as $event) {
             static::$event(function ($instance) use ($event) {
                 if ($event === 'created' || $event === 'saved' || $event === 'updated') {
-                    $instance->wipeRelatedCaches($instance->relationships());
+                    $instance->wipeRelatedCaches($instance->getCacheableRelationships());
                 }
                 if ($event === 'deleting') {
-                    $instance->wipeRelatedCaches($instance->relationships());
+                    $instance->wipeRelatedCaches($instance->getCacheableRelationships());
                     $instance->wipeCache();
                 }
             });
@@ -175,7 +175,7 @@ trait CacheableModel{
      */
     public function wipeCachedRelations(array $relations = null){
         if (is_null($relations)){
-            $relations = $this->relationships();
+            $relations = $this->getCacheableRelationships();
         }
 
         foreach($relations as $relation){
@@ -215,7 +215,7 @@ trait CacheableModel{
     /**
      * Returns the names of model relationship methods that are cacheable.
      */
-    public function relationships()
+    public function getCacheableRelationships()
     {
         $model = $this;
 
