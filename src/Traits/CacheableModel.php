@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Traits;
-
 use DateTime;
 use Exception;
 use ErrorException;
