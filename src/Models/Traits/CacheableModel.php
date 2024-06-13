@@ -1,7 +1,5 @@
 <?php
 
-namespace LewisNeiland\Models\Traits;
-
 use DateTime;
 use Exception;
 use ErrorException;
