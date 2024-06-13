@@ -5,7 +5,7 @@
 
     "autoload": {
         "psr-4": {
-            "LewisNeiland\\Models\\Traits": "/src/Models/Traits/"
+            "LewisNeiland\\CacheableModel\\": "/src/Models/Traits/"
         },
         "exclude-from-classmap": ["test-laravel/"]
     },
