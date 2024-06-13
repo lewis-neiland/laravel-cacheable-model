@@ -11,10 +11,9 @@
         }
     },
 
-    "extra": {
-        "excludes-from-classmap": [
-            "test-laravel",
-            "README.md"
+    "archive": {
+        "exclude": [
+            "test-laravel"
         ]
     },
 
