@@ -9,7 +9,7 @@
         "psr-4": {
             "LewisNeiland\\CacheableModel\\": "src/Traits/"
         },
-        "exclude-from-classmap": ["/Tests/", "/test/", "/tests/, /test-laravel/"]
+        "exclude-from-classmap": ["/Tests/", "/test/", "/tests/", "/test-laravel/"]
     },
 
     "archive": {
