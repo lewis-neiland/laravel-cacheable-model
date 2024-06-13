@@ -7,9 +7,17 @@
     },
     "autoload": {
         "psr-4": {
-            "LewisNeiland\\CacheableModel\\": "src/"
+            "LewisNeiland\\CacheableModel\\": "src/Traits/"
         }
     },
+
+    "extra": {
+        "excludes-from-classmap": [
+            "test-laravel",
+            "README.md"
+        ]
+    },
+
     "license": "MIT",
     "authors": [
         {
