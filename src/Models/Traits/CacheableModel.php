@@ -10,8 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
- * Implementation to manage caching models and their relationships. 
- * Does not support caching relationships that are a 3 or more way pivot table.
+ * Laravel Cacheable Models 
+ * @version 0.1.1-dev
+ * Implementation to manage caching models and their relationships.
+ * (Only supports caching of relationships that use an Eloquent Model).
  * @lewis-neiland
  */
 trait CacheableModel{
@@ -91,8 +93,8 @@ trait CacheableModel{
     }
 
     /**
-    * Return/create a cached version of a model instance.
-    * @param int $id Return/create a cached version of a model instance.
+    * Return/create a cached version of a Model instance.
+    * @param int $id Return/create a cached version of a Model instance.
     * @param DateTime|null $time Time before the cache updates to match database. (Default - 30m)
     */
     public static function getCached(int $id, DateTime $time = null){
@@ -110,7 +112,7 @@ trait CacheableModel{
 
     /**
      * Returns/creates a cached version of a relationship as an Eloquent Collection.
-     * @param string $relation Name of a function that returns an Eloquent relation. @example `product->categories()`
+     * @param string $relation Name of a function that returns an Eloquent Relation. @example `product->categories()`
      * @param DateTime|null $time [optional] Time before the cache updates to match database. (Default - 30m)
     */
     public function getCachedRelation(string $relation, DateTime $time = null){
@@ -135,7 +137,7 @@ trait CacheableModel{
     }
 
     /**
-     * Returns a cached version of a relationship as an Model instance if it is present.
+     * Returns a cached version of a Model instance if it is present.
      * @param string $id Id of Model instance.
     */
     public static function findCached(int $id){
@@ -144,15 +146,14 @@ trait CacheableModel{
 
     /**
      * Returns a cached version of a relationship as an Eloquent Collection if it is present.
-     * @param string $relation Name of a function that returns an Eloquent relation (For example: `product->categories()`)
+     * @param string $relation Name of a function that returns an Eloquent Relation @example `categories`
     */
     public function findCachedRelation($relation = null){
         return Cache::get($this->cacheKey($relation));
     }
 
     /**
-     * Flush the cached instance.
-     * @param string|array $relations Name of relation(s) to delete.
+     * Flush the cached Model.
     */
     public function flushCache(){
         Cache::forget($this->cacheKey());
