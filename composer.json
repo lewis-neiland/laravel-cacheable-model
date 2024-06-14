@@ -5,17 +5,19 @@
 
     "autoload": {
         "psr-4": {
-            "LewisNeiland\\Models\\Traits\\CacheableModel\\": "/src/Models/Traits/"
-        },
-        "exclude-from-classmap": ["test-laravel/"]
+            "LewisNeiland\\Models\\Traits\\": "/src/Models/Traits/"
+        }
     },
 
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "illuminate/support": ">=8.0.0",
+        "illuminate/database": ">=8.0.0",
+        "illuminate/cache": ">=8.0.0"
     },
 
     "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "0.1.0"
+    "version": "0.1.1-dev"
 }
