@@ -21,7 +21,7 @@ trait CacheableModel{
     /**
      * Listens for model changes and flushes cache if so.
     */
-    protected static function bootCacheable(){
+    protected static function bootCacheableModel(){
         if (!(is_subclass_of(static::class, Model::class))) {
             die('Error: Class is not of type Illuminate\Database\Eloquent\Model');
         }
