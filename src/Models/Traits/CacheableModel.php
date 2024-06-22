@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
  * Laravel Cacheable Models 
- * @version 0.1.1-dev
+ * @version 0.1.1.1
  * Implementation to manage caching models and their relationships.
  * (Only supports caching of relationships that use an Eloquent Model).
  * @lewis-neiland
